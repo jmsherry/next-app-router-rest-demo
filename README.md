@@ -38,3 +38,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+
+Hi team! Thanks for the session last night. Sorry about my outbreak at the end. Might be worth having a discussion about levelling at the start of next session, before jumping into play. Are we still playing on Friday, or is this a good time in the story to have a social only session on Saturday?

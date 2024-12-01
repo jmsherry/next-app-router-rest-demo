@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 // import CircularProgress from "@mui/material/CircularProgress";
@@ -5,7 +6,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TextField, Button } from "@mui/material";
 
-import Car from "../../types/Car";
+import Car from "@/types/Car";
 
 const schema = yup.object().shape({
   name: yup.string().max(30).required(),
@@ -13,17 +14,22 @@ const schema = yup.object().shape({
   avatar_url: yup.string(),
 });
 
-interface formData {
+export interface formData {
   name: string;
   bhp: string;
-  avatar_url?: string;
+  avatar_url: string;
 }
 
-interface CarData {
+export interface CarData {
   name: string;
   bhp: number;
   avatar_url?: string;
 }
+// export interface CarUpdateData {
+//   name?: string;
+//   bhp?: string;
+//   avatar_url?: string;
+// }
 
 const defaults: { name: string; bhp: string; avatar_url: string } = {
   name: "",
@@ -31,8 +37,8 @@ const defaults: { name: string; bhp: string; avatar_url: string } = {
   avatar_url: "",
 };
 
-type addFormFn = (formData: CarData) => Promise<void>;
-type updateFormFn = (id: string, formData: CarData) => Promise<void>;
+type addFormFn = (formData: CarData) => Promise<any>;
+type updateFormFn = (id: string, formData: CarData) => Promise<any>;
 
 interface CarFormInput {
   car?: Car;
@@ -41,7 +47,7 @@ interface CarFormInput {
 }
 
 export default function CarForm({ car, addCar, updateCar }: CarFormInput) {
-  console.log({ car });
+  console.log(car, addCar, updateCar);
 
   const {
     handleSubmit,
@@ -49,6 +55,7 @@ export default function CarForm({ car, addCar, updateCar }: CarFormInput) {
     reset,
     control,
   } = useForm({
+    // @ts-ignore
     resolver: yupResolver(schema),
     mode: "onChange",
     defaultValues: defaults,
@@ -57,13 +64,12 @@ export default function CarForm({ car, addCar, updateCar }: CarFormInput) {
   useEffect(() => {
     // console.log('useeffect', car);
     if (car) {
-      const { _id, avatar_url, bhp, name } = car;
-      const av = avatar_url || "";
+      const {  avatar_url="", bhp, name } = car;
 
       reset({
         name,
         bhp: String(bhp),
-        avatar_url: av,
+        avatar_url,
       });
     }
   }, [car, reset]);
@@ -77,9 +83,9 @@ export default function CarForm({ car, addCar, updateCar }: CarFormInput) {
     let data: CarData = { ...vals, bhp: Number(vals.bhp) };
 
     if (car) {
-      updateCar(car._id, data);
+      updateCar?.(car._id, data);
     } else {
-      addCar(data);
+      addCar?.(data);
     }
   };
 
